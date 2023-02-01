@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  short_url:
+    container_name: short_url
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/app
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+
+  postgres:
+    image: postgres:alpine
+    restart: always
+
+    environment:
+        POSTGRES_USER: test
+        POSTGRES_PASSWORD: test
+        POSTGRES_DB: 'db_urls'
+    command: '-c max_connections=20'
+    volumes:
+      - ./postgresql_data:/var/lib/postgresql/data
+      - ./migrations/migration.sql:/docker-entrypoint-initdb.d/migration.sql
+    ports:
+      - 5432:5432
+#    expose:
+#      - "5432"
+
+networks:
+  app-network:
+    driver: bridge
