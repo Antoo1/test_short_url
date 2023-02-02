@@ -2,8 +2,6 @@ import logging.config
 
 from short_url.app.config import config
 
-MEGABYTE = 1024 * 1024
-
 LOGGING_CONFIG = {
     'version': 1,
     'formatters': {
