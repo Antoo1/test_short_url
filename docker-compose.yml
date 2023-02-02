@@ -7,10 +7,12 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile
+    environment:
+      ENVIRONMENT: test
     ports:
       - "5000:5000"
     volumes:
-      - ./:/app
+      - ./:/usr/src/app
     depends_on:
       - postgres
     networks:
@@ -19,6 +21,7 @@ services:
 
   postgres:
     image: postgres:alpine
+    container_name: short_url_postgres
     restart: always
 
     environment:
@@ -29,10 +32,12 @@ services:
     volumes:
       - ./postgresql_data:/var/lib/postgresql/data
       - ./migrations/migration.sql:/docker-entrypoint-initdb.d/migration.sql
-    ports:
-      - 5432:5432
-#    expose:
-#      - "5432"
+#    ports:
+#      - 5432:5432
+    expose:
+      - "5432"
+    networks:
+      - app-network
 
 networks:
   app-network:

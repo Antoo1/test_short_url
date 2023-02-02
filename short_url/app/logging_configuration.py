@@ -1,19 +1,8 @@
 import logging.config
 
-from short_url.app.config import config, Environment
+from short_url.app.config import config
 
 MEGABYTE = 1024 * 1024
-
-# file_handler = {
-#     'filebeat': {
-#         'class': 'logging.handlers.RotatingFileHandler',
-#         'formatter': 'default',
-#         'filename': f'/tmp/log/{config.APP_NAME}.log',
-#         'backupCount': 1,
-#         'maxBytes': 3 * MEGABYTE,
-#     },
-# }
-
 
 LOGGING_CONFIG = {
     'version': 1,
@@ -31,7 +20,6 @@ LOGGING_CONFIG = {
             'formatter': 'default',
             'stream': 'ext://sys.stdout',
         },
-        # **file_handler
     },
     'loggers': {
         '': {

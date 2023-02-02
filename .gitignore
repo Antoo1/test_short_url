@@ -3,3 +3,4 @@ postgresql_data
 .python-version
 __pycache__
 .idea
+.pytest_cache

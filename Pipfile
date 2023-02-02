@@ -13,6 +13,10 @@ greenlet = "*"
 gunicorn = "*"
 
 [dev-packages]
+pytest = "*"
+asgi-lifespan = "*"
+httpx = "*"
+pytest-asyncio = "*"
 
 [requires]
 python_version = "3.10"

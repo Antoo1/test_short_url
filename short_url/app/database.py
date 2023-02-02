@@ -17,7 +17,7 @@ engine = create_async_engine(
             'application_name': config.APP_NAME
         }
     },
-    echo=False,
+    echo=config.DEBUG,
 )
 
 async_session: Callable[[], AsyncSession] = sessionmaker(

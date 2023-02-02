@@ -2,6 +2,7 @@ APP_NAME: 'short_url'
 ENVIRONMENT: local
 INIT_LOGGING: true
 LOG_LEVEL: DEBUG
+DEBUG: true
 ENABLE_SWAGGER: true
 
 METHODS: ['GET', 'POST']
