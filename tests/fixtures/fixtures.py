@@ -1,9 +1,9 @@
-import pytest_asyncio
+import pytest
 
 from short_url.db.models.url import TShortUrl
 
 
-@pytest_asyncio.fixture(scope='session')
+@pytest.fixture
 async def data(db):
     data = [
         TShortUrl(source_url='https://google.com', short_url='test1'),

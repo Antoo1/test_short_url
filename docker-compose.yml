@@ -32,10 +32,10 @@ services:
     volumes:
       - ./postgresql_data:/var/lib/postgresql/data
       - ./migrations/migration.sql:/docker-entrypoint-initdb.d/migration.sql
-#    ports:
-#      - 5432:5432
-    expose:
-      - "5432"
+    ports:
+      - 54321:5432
+#    expose:
+#      - "54321"
     networks:
       - app-network
 

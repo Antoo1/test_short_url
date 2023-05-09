@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS tshort_urls CASCADE;
-
+DROP INDEX IF EXISTS  ui_short;
 
 create table if not exists tshort_urls
 (

@@ -17,7 +17,6 @@ class Environment(str, Enum):
 
 class Config(BaseModel):
     APP_NAME: str
-    ENABLE_SWAGGER: bool = False
     DEBUG: bool = False
     INIT_LOGGING: str
     LOG_LEVEL: str

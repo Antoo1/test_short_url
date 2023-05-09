@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
-from short_url.app.fastapi import create_app
+from short_url.app.fast_api import create_app
 
 app: FastAPI = create_app()
 

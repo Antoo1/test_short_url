@@ -2,9 +2,8 @@ APP_NAME: 'short_url'
 ENVIRONMENT: local
 INIT_LOGGING: true
 LOG_LEVEL: DEBUG
-ENABLE_SWAGGER: true
 
 METHODS: ['GET', 'POST']
-DB_URL: 'postgresql+asyncpg://test:test@short_url_postgres:5432/db_urls'
+DB_URL: 'postgresql+asyncpg://test:test@short_url_postgres:54321/db_urls'
 DB_POOL_SIZE: 5
 

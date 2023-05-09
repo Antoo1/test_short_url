@@ -1,43 +1,44 @@
 import pytest
-from sqlalchemy import select, Select
+import sqlalchemy
+from sqlalchemy import select
 
-from short_url.app.database import async_session
 from short_url.db.models.url import TShortUrl
 from short_url.db.queries import (
     get_source_url_from_db,
     create_short_url_in_db,
     remove_short_url_from_db
 )
-
-
-async def get_all():
-    async with async_session() as session:
-        query: Select = select(TShortUrl)
-        return await session.execute(query)
+from tests.fixtures.fixtures import data
 
 
 @pytest.mark.asyncio
-async def test_get_source_url_from_db(data):
-    res = await get_source_url_from_db('test1')
+async def test_get_source_url_from_db(data, db):
+    res = await get_source_url_from_db('test1', db)
     assert res.source_url == 'https://google.com'
 
 
 @pytest.mark.asyncio
-async def test_create_short_url_in_db():
-    _all = await get_all()
-    expected = len(_all.all()) + 1
+async def test_create_short_url_in_db(db):
+    async with db() as _db:
+        short_url = await create_short_url_in_db('http://very_long_url', _db)
 
-    short_url = await create_short_url_in_db('http://very_long_url')
+        query = select(TShortUrl).where(TShortUrl.source_url == 'http://very_long_url')
+        res = await db.execute(query)
+        res = res.scalar_one()
 
-    _all = await get_all()
-    assert len(_all.all()) == expected
-    assert short_url
+    assert res
+    assert short_url == res.short_url
 
 
 @pytest.mark.asyncio
-async def test_remove_short_url_from_db(data):
-    await remove_short_url_from_db('test1')
+async def test_remove_short_url_from_db(data, db):
+    async with db() as _db:
+        query = select(TShortUrl).where(TShortUrl.short_url == 'test1')
+        before_action = (await db.execute(query)).scalar_one()
+        assert before_action
 
-    for i in await get_all():
-        for j in i:
-            assert j.short_url != 'test1'
+        await remove_short_url_from_db('test1', db)
+
+        query = select(TShortUrl).where(TShortUrl.short_url == 'test1')
+        with pytest.raises(sqlalchemy.exc.NoResultFound):
+            (await db.execute(query)).scalar_one()

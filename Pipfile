@@ -11,6 +11,7 @@ sqlalchemy = "*"
 "ruamel.yaml" = "*"
 greenlet = "*"
 gunicorn = "*"
+fastapi-utils = "*"
 
 [dev-packages]
 pytest = "*"
